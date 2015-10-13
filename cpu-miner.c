@@ -38,7 +38,7 @@
 #include "compat.h"
 #include "miner.h"
 
-#define PROGRAM_NAME		"minerdlegacy"
+#define PROGRAM_NAME		"m-minerd"
 #define LP_SCANTIME		60
 
 #ifdef __linux /* Linux specific policy and affinity management */
