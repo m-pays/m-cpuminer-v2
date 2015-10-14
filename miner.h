@@ -159,8 +159,11 @@ extern int scanhash_scrypt(int thr_id, uint32_t *pdata,
 	unsigned char *scratchbuf, const uint32_t *ptarget,
 	uint32_t max_nonce, unsigned long *hashes_done, int N);
 
+int scanhash_m7m_hash_t(int thr_id, uint32_t *pdata, const uint32_t *ptarget,
+    uint64_t max_nonce, unsigned long *hashes_done, struct timespec cpu_dec_time);
+
 int scanhash_m7m_hash(int thr_id, uint32_t *pdata, const uint32_t *ptarget,
-    uint64_t max_nonce, unsigned long *hashes_done, bool fhash_test, bool fcpu_dec, struct timespec cpu_dec_time);
+    uint64_t max_nonce, unsigned long *hashes_done);
 
 struct thr_info {
 	int		id;

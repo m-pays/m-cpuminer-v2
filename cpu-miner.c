@@ -1209,7 +1209,7 @@ static void *miner_thread(void *userdata)
 
 				hashes_done = 0;
 				gettimeofday(&ttest_start, NULL);
-				scanhash_m7m_hash(thr_id, work.data, work.target, work.data[19] + 1000, &hashes_done, false, false, cpu_dec_time);
+				scanhash_m7m_hash(thr_id, work.data, work.target, work.data[19] + 1000, &hashes_done);
 				gettimeofday(&ttest_end, NULL);
 				timeval_subtract(&tdiff, &ttest_end, &ttest_start);
 				hashrate_t = hashes_done/((double)(tdiff.tv_sec) + (double)(tdiff.tv_usec)*1.e-6); // h/s
@@ -1227,7 +1227,7 @@ static void *miner_thread(void *userdata)
 					cpu_dec_time.tv_nsec = (int64_t)dt_m%(int64_t)1e9;
 					hashes_done = 0;
 					gettimeofday(&ttest_start, NULL);
-					scanhash_m7m_hash(thr_id, work.data, work.target, work.data[19] + 100, &hashes_done, false, true, cpu_dec_time);
+					scanhash_m7m_hash_t(thr_id, work.data, work.target, work.data[19] + 100, &hashes_done, cpu_dec_time);
 					gettimeofday(&ttest_end, NULL);
 					timeval_subtract(&tdiff, &ttest_end, &ttest_start);
 					hashrate_t2 = hashes_done/((double)(tdiff.tv_sec) + (double)(tdiff.tv_usec)*1.e-6); // h/s
@@ -1261,8 +1261,10 @@ static void *miner_thread(void *userdata)
 			break;
 
 		case ALGO_M7M:
-			rc = scanhash_m7m_hash(thr_id, work.data, work.target,
-			                      max_nonce, &hashes_done, false, fcpu_dec, cpu_dec_time);
+			rc = ( fcpu_dec ? scanhash_m7m_hash_t(thr_id, work.data, work.target,
+			                      max_nonce, &hashes_done, cpu_dec_time) : 
+			                  scanhash_m7m_hash(thr_id, work.data, work.target,
+			                      max_nonce, &hashes_done) );
 			break;
 
 		default:
